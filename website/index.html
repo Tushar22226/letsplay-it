@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="LetsPlayIt">
+    <title>LetsPlayIt - Music Downloader v2.1 [UPDATED]</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-music"></i>
+                <h1>LetsPlayIt v2.1</h1>
+            </div>
+            <p class="subtitle">Download your favorite songs instantly [iOS FIXED]</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search for songs, artists, albums..." />
+                    <button id="searchBtn" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORS Notice -->
+        <div id="corsNotice" class="cors-notice hidden">
+            <div class="notice-content">
+                <h3><i class="fas fa-exclamation-triangle"></i> CORS Access Required</h3>
+                <p>To access music data, we need to enable CORS. Please click the button below to enable access:</p>
+                <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" class="cors-btn">
+                    <i class="fas fa-unlock"></i>
+                    Enable CORS Access
+                </a>
+                <p class="cors-info">This will open a new tab. Click "Request temporary access" and then return here.</p>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-indicator hidden">
+            <div class="spinner"></div>
+            <p>Searching for songs...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <div id="resultsContainer" class="results-container hidden">
+                <h2 class="results-title">Search Results</h2>
+                <div id="songsList" class="songs-list"></div>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section class="trending-section">
+            <h2 class="section-title">
+                <i class="fas fa-fire"></i>
+                Trending Songs
+            </h2>
+            <div id="trendingList" class="songs-list"></div>
+        </section>
+
+        <!-- Download Progress Modal -->
+        <div id="downloadModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Downloading Song</h3>
+                    <button id="closeModal" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="downloadInfo" class="download-info">
+                        <img id="downloadImage" src="" alt="Song Cover" class="download-image">
+                        <div class="download-details">
+                            <h4 id="downloadTitle">Song Title</h4>
+                            <p id="downloadArtist">Artist Name</p>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progressBar" class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                        <p id="progressText" class="progress-text">0%</p>
+                    </div>
+                    <div class="quality-selector">
+                        <label for="qualitySelect">Quality:</label>
+                        <select id="qualitySelect">
+                            <option value="96">96 kbps</option>
+                            <option value="160">160 kbps</option>
+                            <option value="320" selected>320 kbps</option>
+                        </select>
+                    </div>
+                    <div class="download-actions">
+                        <button id="startDownloadBtn" class="download-action-btn">
+                            <i class="fas fa-download"></i>
+                            Start Download
+                        </button>
+                        <button id="cancelDownloadBtn" class="cancel-btn">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 LetsPlayIt. Music for everyone.</p>
+            <p class="disclaimer">This tool is for hackathon purposes only. Please respect copyright laws.</p>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">Version: iOS-Fix-v2.1 | Updated: 2024-01-15</p>
+        </footer>
+    </div>
+
+    <script src="script.js?v=20240115-ios-fix"></script>
+</body>
+</html>

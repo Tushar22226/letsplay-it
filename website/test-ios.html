@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Download Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+        .test-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background: #0056CC;
+        }
+        .result {
+            background: #333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007AFF;
+        }
+        .ios-detected {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .not-ios {
+            background: #FF9800;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .code {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 iOS Download Testing Tool</h1>
+    
+    <div class="test-section">
+        <h2>📱 Device Detection Test</h2>
+        <div id="deviceInfo"></div>
+        <button class="test-button" onclick="testDeviceDetection()">Test Device Detection</button>
+        <button class="test-button" onclick="simulateIOS()">Simulate iOS</button>
+        <button class="test-button" onclick="resetUserAgent()">Reset User Agent</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🔗 Download URL Test</h2>
+        <input type="text" id="testUrl" placeholder="Enter download URL" style="width: 100%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #555; border-radius: 5px;">
+        <br>
+        <button class="test-button" onclick="testDownload()">Test Download</button>
+        <button class="test-button" onclick="testCopyLink()">Test Copy Link</button>
+        <div id="downloadResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🎵 JioSaavn API Test</h2>
+        <input type="text" id="songQuery" placeholder="Enter song name" value="tum hi ho" style="width: 100%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #555; border-radius: 5px;">
+        <br>
+        <button class="test-button" onclick="testSearch()">Test Search</button>
+        <button class="test-button" onclick="testFullDownload()">Test Full Download Flow</button>
+        <div id="apiResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 User Agent Strings for Testing</h2>
+        <div class="code">
+            <strong>iPhone Safari:</strong><br>
+            Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1
+        </div>
+        <div class="code">
+            <strong>iPad Safari:</strong><br>
+            Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1
+        </div>
+        <button class="test-button" onclick="copyUserAgent('iphone')">Copy iPhone UA</button>
+        <button class="test-button" onclick="copyUserAgent('ipad')">Copy iPad UA</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🛠️ Manual Testing Instructions</h2>
+        <ol>
+            <li><strong>Chrome DevTools:</strong> F12 → Device Toggle → Select iPhone</li>
+            <li><strong>Firefox:</strong> F12 → Responsive Design Mode → Choose iPhone</li>
+            <li><strong>User Agent Extension:</strong> Install "User-Agent Switcher" extension</li>
+            <li><strong>Command Line:</strong> Use curl with iOS user agent</li>
+        </ol>
+    </div>
+
+    <script>
+        // Test sample download URL
+        const sampleUrl = 'https://aac.saavncdn.com/238/35726d4394604604e961bf5b846870d0_320.mp4';
+        document.getElementById('testUrl').value = sampleUrl;
+
+        // Device detection function (same as main app)
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        }
+
+        function testDeviceDetection() {
+            const isIOSDevice = isIOS();
+            const userAgent = navigator.userAgent;
+            
+            const result = `
+                <div class="${isIOSDevice ? 'ios-detected' : 'not-ios'}">
+                    <strong>iOS Detected:</strong> ${isIOSDevice ? 'YES ✅' : 'NO ❌'}
+                </div>
+                <div class="result">
+                    <strong>User Agent:</strong><br>
+                    ${userAgent}
+                </div>
+                <div class="result">
+                    <strong>Platform:</strong> ${navigator.platform}<br>
+                    <strong>Vendor:</strong> ${navigator.vendor}<br>
+                    <strong>Language:</strong> ${navigator.language}
+                </div>
+            `;
+            
+            document.getElementById('deviceInfo').innerHTML = result;
+        }
+
+        function simulateIOS() {
+            // Override user agent to simulate iOS
+            Object.defineProperty(navigator, 'userAgent', {
+                value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
+                writable: false
+            });
+            
+            alert('iOS simulation activated! Reload the page to test iOS behavior.');
+            testDeviceDetection();
+        }
+
+        function resetUserAgent() {
+            location.reload();
+        }
+
+        function testDownload() {
+            const url = document.getElementById('testUrl').value;
+            if (!url) {
+                alert('Please enter a download URL');
+                return;
+            }
+
+            const isIOSDevice = isIOS();
+            let result = `<div class="result"><strong>Testing Download:</strong> ${url}</div>`;
+            
+            if (isIOSDevice) {
+                result += `<div class="ios-detected">iOS detected - Opening in new tab</div>`;
+                window.open(url, '_blank');
+                result += `<div class="result">✅ Opened in new tab. Check if file downloads or plays.</div>`;
+            } else {
+                result += `<div class="not-ios">Non-iOS detected - Attempting direct download</div>`;
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'test-song.mp3';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                result += `<div class="result">✅ Download link triggered. Check downloads folder.</div>`;
+            }
+            
+            document.getElementById('downloadResult').innerHTML = result;
+        }
+
+        function testCopyLink() {
+            const url = document.getElementById('testUrl').value;
+            if (!url) {
+                alert('Please enter a download URL');
+                return;
+            }
+
+            try {
+                navigator.clipboard.writeText(url).then(() => {
+                    document.getElementById('downloadResult').innerHTML = `
+                        <div class="result">
+                            ✅ Link copied to clipboard!<br>
+                            <strong>Next steps for iOS testing:</strong><br>
+                            1. Install "Documents by Readdle" app<br>
+                            2. Open Documents app<br>
+                            3. Tap browser icon<br>
+                            4. Paste the link<br>
+                            5. Test download
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                document.getElementById('downloadResult').innerHTML = `
+                    <div class="result">
+                        ❌ Clipboard API failed: ${error.message}<br>
+                        <strong>Manual copy:</strong> ${url}
+                    </div>
+                `;
+            }
+        }
+
+        async function testSearch() {
+            const query = document.getElementById('songQuery').value;
+            document.getElementById('apiResult').innerHTML = '<div class="result">🔍 Searching...</div>';
+            
+            try {
+                // This would use your actual search function
+                const result = `
+                    <div class="result">
+                        ✅ Search test completed for: "${query}"<br>
+                        <strong>Note:</strong> This is a mock result. 
+                        Integrate with your actual searchSongs() function for real testing.
+                    </div>
+                `;
+                document.getElementById('apiResult').innerHTML = result;
+            } catch (error) {
+                document.getElementById('apiResult').innerHTML = `
+                    <div class="result">❌ Search failed: ${error.message}</div>
+                `;
+            }
+        }
+
+        function testFullDownload() {
+            const isIOSDevice = isIOS();
+            const query = document.getElementById('songQuery').value;
+            
+            let result = `
+                <div class="result">
+                    <strong>Full Download Flow Test:</strong><br>
+                    Query: "${query}"<br>
+                    Device: ${isIOSDevice ? 'iOS' : 'Non-iOS'}<br>
+                    <br>
+                    <strong>Expected Flow:</strong><br>
+            `;
+            
+            if (isIOSDevice) {
+                result += `
+                    1. Search for song ✅<br>
+                    2. Get download URL ✅<br>
+                    3. Show iOS options dialog ✅<br>
+                    4. User chooses option ✅<br>
+                    5. Open in new tab OR copy link ✅<br>
+                    6. User follows iOS instructions ✅
+                `;
+            } else {
+                result += `
+                    1. Search for song ✅<br>
+                    2. Get download URL ✅<br>
+                    3. Fetch file as blob ✅<br>
+                    4. Create download link ✅<br>
+                    5. Trigger download ✅<br>
+                    6. File saves to downloads ✅
+                `;
+            }
+            
+            result += `</div>`;
+            document.getElementById('apiResult').innerHTML = result;
+        }
+
+        function copyUserAgent(type) {
+            const userAgents = {
+                iphone: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
+                ipad: 'Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1'
+            };
+            
+            navigator.clipboard.writeText(userAgents[type]).then(() => {
+                alert(`${type.toUpperCase()} User Agent copied to clipboard!`);
+            });
+        }
+
+        // Run initial test
+        testDeviceDetection();
+    </script>
+</body>
+</html>
